@@ -1,5 +1,36 @@
-# React + TypeScript + Vite
+# Keycloak + React + TypeScript + Vite + Express server + DB connection
 
+## This project is a template for a React application with Keycloak authentication, TypeScript, Vite, Express server, and a database connection along with pwa.
+
+Clone this project 
+
+Create a .env.local file, and add the following variables:
+```
+DB_USER
+DB_HOST
+DB_DATABASE
+DB_PASSWORD
+DB_PORT
+
+KEYCLOAK_URL
+KEYCLOAK_REALM
+KEYCLOAK_CLIENT_ID
+KEYCLOAK_CLIENT_SECRET
+FRONTEND_URL
+```
+
+This will install the dependencies for both the frontend 
+```
+run npm install
+```
+This will start both the frontend and the backend
+```
+npm run dev
+```
+If the backend does not start, run
+```
+node server/index.js
+```
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

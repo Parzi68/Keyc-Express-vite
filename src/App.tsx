@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { KeycloakProvider } from './components/KeycloakProvider';
+import AuthGuard from './components/AuthGuard';
+import AuthCallback from './components/AuthCallback';
+import PrivatePage from './pages/PrivatePage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <KeycloakProvider>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/auth/error" element={<div>Authentication Error</div>} />
+          <Route path="/auth/success" element={<AuthCallback />} />
+          <Route path="/public" element={<div>Public Page</div>} />
+          <Route path="/" element={<div>Home Page</div>} />
+          
+          {/* Protected routes - wrap the element with AuthGuard, not the Route itself */}
+          <Route path="/private" element={
+            <AuthGuard>
+              <PrivatePage />
+            </AuthGuard>
+          }>
+          </Route>
+        </Routes>
+      </KeycloakProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;
